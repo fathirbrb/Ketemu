@@ -3,7 +3,6 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FoundReportController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LostReportController;
@@ -15,14 +14,7 @@ Route::pattern('user', '[0-9]+');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// ---- Auth ----
-Route::middleware('guest')->group(function () {
-    Route::get('/masuk', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/masuk', [AuthController::class, 'login']);
-    Route::get('/daftar', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/daftar', [AuthController::class, 'register']);
-});
-Route::post('/keluar', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+require __DIR__.'/auth.php';
 
 // ---- CRUD laporan (barang hilang & barang temuan) ----
 $reports = [

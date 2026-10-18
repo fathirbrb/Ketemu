@@ -6,7 +6,7 @@
 <div class="panel overflow-x-auto">
     <table class="w-full text-sm">
         <thead class="text-left text-slate-500 border-b border-slate-200">
-            <tr><th class="px-4 py-3 font-bold">Nama</th><th class="px-4 py-3 font-bold">Email</th><th class="px-4 py-3 font-bold">Peran</th><th class="px-4 py-3 font-bold">Laporan</th><th class="px-4 py-3"></th></tr>
+            <tr><th scope="col" class="px-4 py-3 font-bold">Nama</th><th scope="col" class="px-4 py-3 font-bold">Email</th><th scope="col" class="px-4 py-3 font-bold">Peran</th><th scope="col" class="px-4 py-3 font-bold">Laporan</th><th scope="col" class="px-4 py-3">Aksi</th></tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
             @foreach ($users as $u)

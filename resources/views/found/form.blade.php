@@ -3,7 +3,7 @@
 @section('title', $editing ? 'Ubah laporan' : 'Tambah laporan')
 @section('content')
 <div class="max-w-3xl mx-auto">
-    <a href="{{ route('found.index') }}" class="text-sm font-bold text-slate-500 hover:text-ink">← Daftar barang temuan</a>
+    <a href="{{ route('found.index') }}" class="text-sm font-bold text-slate-500 hover:text-ink">Daftar barang temuan</a>
     <h1 class="mt-5 font-display text-3xl font-extrabold text-ink">{{ $editing ? 'Ubah laporan' : 'Laporkan barang temuan' }}</h1>
     <p class="mt-2 mb-6 text-sm text-slate-500">Ceritakan ciri barang dan tempat kamu menemukannya agar pemiliknya mudah mengenali.</p>
     @if ($categories->isEmpty())

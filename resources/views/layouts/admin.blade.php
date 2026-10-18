@@ -6,16 +6,16 @@
     <title>@yield('title', 'Panel Admin') | Ketemu Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
     <script>
         tailwind.config = {
             theme: { extend: {
                 fontFamily: {
-                    sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                    display: ['"Bricolage Grotesque"', '"DM Sans"', 'sans-serif'],
+                    sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    display: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
                 },
-                colors: { ink: '#17233B', tag: '#F5B82E', lost: '#E4572E', found: '#1F8A70', paper: '#F3F5F8' },
+                colors: { ink: '#17233B', tag: '#F5B82E', lost: '#8A6208', found: '#1F8A70', paper: '#F3F5F8' },
             } },
         };
     </script>
@@ -30,9 +30,9 @@
             .panel { @apply bg-white border border-slate-200 rounded-xl; }
         }
     </style>
-    <style>html{font-size:15px}</style>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ filemtime(public_path('css/admin.css')) }}">
 </head>
-<body class="bg-paper text-slate-800 font-sans antialiased">
+<body class="admin-ui bg-paper text-slate-800 font-sans antialiased">
 @php
     $nav = [
         ['admin.dashboard', 'Ringkasan', 'admin.dashboard', '<path d="M3 12l9-9 9 9M5 10v10h14V10"/>'],
@@ -44,16 +44,14 @@
 @endphp
 <div class="min-h-screen lg:flex">
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen lg:shrink-0 bg-ink text-white flex flex-col transition-transform duration-200">
-        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2.5 px-6 h-16 font-display font-extrabold text-2xl tracking-tight border-b border-white/10">
-            <span class="relative inline-block w-7 h-7 bg-tag rounded-md rotate-6" aria-hidden="true"><span class="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-ink"></span></span>
-            Ketemu
+        <a href="{{ route('admin.dashboard') }}" class="admin-logo flex items-center gap-2.5 px-6 h-16 border-b border-white/10" aria-label="Ketemu — Panel admin">
+            <span class="relative block w-36 h-10 overflow-hidden"><img src="{{ asset('images/ketemu-logo-navy.png') }}" alt="Ketemu" class="absolute max-w-none w-[230px] left-[-54px] top-1/2 -translate-y-1/2"></span>
         </a>
         <nav class="flex-1 overflow-y-auto px-3 py-5 space-y-1 text-sm font-bold">
             <p class="px-3 pb-2 text-xs font-medium text-white/40">Menu admin</p>
             @foreach ($nav as [$route, $label, $pattern, $icon])
                 @php $active = request()->routeIs($pattern); @endphp
-                <a href="{{ route($route) }}" class="flex items-center gap-3 rounded-lg px-3 py-2.5 border-l-4 {{ $active ? 'bg-white/10 text-tag border-tag' : 'border-transparent text-white/75 hover:bg-white/5 hover:text-white' }}">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{!! $icon !!}</svg>
+                <a href="{{ route($route) }}" @if ($active) aria-current="page" @endif class="flex items-center gap-3 rounded-lg px-3 py-2.5 border-l-4 {{ $active ? 'bg-tag text-ink border-tag' : 'border-transparent text-white/75 hover:bg-white/5 hover:text-white' }}">
                     {{ $label }}
                 </a>
             @endforeach

@@ -79,12 +79,12 @@
         <a href="{{ route('found.show', $item) }}"
            class="panel overflow-hidden hover:shadow-lg transition
                   focus:outline-none focus-visible:ring-2 focus-visible:ring-ink">
-            <div class="aspect-[16/10] bg-slate-100">
+            <div class="relative aspect-[16/10] overflow-hidden bg-[#F2F1ED] flex items-center justify-center">
                 @if ($item->photo_url)
                     <img src="{{ $item->photo_url }}"
                          alt="Foto {{ $item->title }}"
                          loading="lazy"
-                         class="w-full h-full object-cover">
+                         class="block absolute inset-0 m-auto w-[65%] h-[65%] object-contain mix-blend-multiply">
                 @else
                     <div class="w-full h-full flex flex-col items-center justify-center gap-3">
                         <span class="text-5xl" aria-hidden="true">

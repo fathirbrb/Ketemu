@@ -11,22 +11,18 @@
             <label for="name" class="label">Nama kategori</label>
             <input id="name" name="name" value="{{ old('name') }}" required maxlength="100" class="input" placeholder="Contoh: Perhiasan">
         </div>
-        <div>
-            <label for="icon" class="label">Emoji <span class="font-medium text-slate-400">(opsional)</span></label>
-            <input id="icon" name="icon" value="{{ old('icon') }}" maxlength="20" class="input" placeholder="💍">
-        </div>
         <button type="submit" class="btn-primary w-full">Simpan kategori</button>
     </form>
 
     <div class="lg:col-span-2 panel overflow-x-auto">
         <table class="w-full text-sm">
             <thead class="text-left text-slate-500 border-b border-slate-200">
-                <tr><th class="px-4 py-3 font-bold">Kategori</th><th class="px-4 py-3 font-bold">Laporan</th><th class="px-4 py-3"></th></tr>
+                <tr><th scope="col" class="px-4 py-3 font-bold">Kategori</th><th scope="col" class="px-4 py-3 font-bold">Laporan</th><th scope="col" class="px-4 py-3">Aksi</th></tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
                 @forelse ($categories as $c)
                     <tr>
-                        <td class="px-4 py-3 font-bold text-ink">{{ $c->icon }} {{ $c->name }}</td>
+                        <td class="px-4 py-3 font-bold text-ink">{{ $c->name }}</td>
                         <td class="px-4 py-3 text-slate-600">{{ $c->lost_items_count }} hilang, {{ $c->found_items_count }} temuan</td>
                         <td class="px-4 py-3">
                             <div class="flex justify-end gap-2">

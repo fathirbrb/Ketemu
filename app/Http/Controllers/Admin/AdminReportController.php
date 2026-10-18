@@ -97,12 +97,9 @@ abstract class AdminReportController extends Controller
     public function index(Request $request)
     {
         $m = $this->model();
-        $term = $request->filled('q')
-            ? '%'.str_replace(['%', '_'], ['\%', '\_'], $request->string('q')->toString()).'%'
-            : null;
 
         $items = $m::with(['category', 'user'])
-            ->when($term, fn ($q) => $q->where(fn ($w) => $w->where('title', 'ilike', $term)->orWhere('location', 'ilike', $term)))
+            ->when($request->filled('q'), fn ($q) => $q->where(fn ($w) => $w->whereLike('title', '%'.$request->string('q')->toString().'%')->orWhereLike('location', '%'.$request->string('q')->toString().'%')))
             ->when($request->integer('category') > 0, fn ($q) => $q->where('category_id', $request->integer('category')))
             ->when($request->filled('status'), fn ($q) => $q->where('status', $request->string('status')->toString()))
             ->latest('event_date')->latest('id')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\LostItem;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -70,7 +71,7 @@ class LostReportController extends Controller
 
         try {
             if ($request->hasFile('photo')) {
-                $photo = $request->file('photo')->store('lost', 'public');
+                $photo = $this->storePhoto($request->file('photo'));
             }
 
             $item = LostItem::create([
@@ -114,7 +115,7 @@ class LostReportController extends Controller
 
         try {
             if ($request->hasFile('photo')) {
-                $newPhoto = $request->file('photo')->store('lost', 'public');
+                $newPhoto = $this->storePhoto($request->file('photo'));
                 $data['photo'] = $newPhoto;
             } elseif ($request->boolean('remove_photo')) {
                 $data['photo'] = null;
@@ -215,6 +216,19 @@ class LostReportController extends Controller
         unset($data['photo'], $data['remove_photo']);
 
         return $data;
+    }
+
+    /** Simpan foto lewat getPathname() supaya aman di Windows/Laragon. */
+    private function storePhoto(UploadedFile $file): string
+    {
+        $path = 'lost/'.$file->hashName();
+        $contents = file_get_contents($file->getPathname());
+
+        if ($contents === false || ! Storage::disk('public')->put($path, $contents)) {
+            throw new \RuntimeException('Foto gagal disimpan ke storage.');
+        }
+
+        return $path;
     }
 
     private function deletePhoto(string $path): void

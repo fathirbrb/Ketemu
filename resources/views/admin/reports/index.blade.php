@@ -42,12 +42,12 @@
     <table class="w-full text-sm">
         <thead class="text-left text-slate-500 border-b border-slate-200">
             <tr>
-                <th class="px-4 py-3 font-bold">Barang</th>
-                <th class="px-4 py-3 font-bold">Lokasi</th>
-                <th class="px-4 py-3 font-bold">{{ $meta['dateLabel'] }}</th>
-                <th class="px-4 py-3 font-bold">Pelapor</th>
-                <th class="px-4 py-3 font-bold">Status</th>
-                <th class="px-4 py-3"></th>
+                <th scope="col" class="px-4 py-3 font-bold">Barang</th>
+                <th scope="col" class="px-4 py-3 font-bold">Lokasi</th>
+                <th scope="col" class="px-4 py-3 font-bold">{{ $meta['dateLabel'] }}</th>
+                <th scope="col" class="px-4 py-3 font-bold">Pelapor</th>
+                <th scope="col" class="px-4 py-3 font-bold">Status</th>
+                <th scope="col" class="px-4 py-3">Aksi</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">

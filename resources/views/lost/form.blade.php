@@ -3,7 +3,7 @@
 @section('title', $editing ? 'Ubah laporan' : 'Tambah laporan')
 @section('content')
 <div class="max-w-3xl mx-auto">
-    <a href="{{ route('lost.index') }}" class="text-sm font-bold text-slate-500 hover:text-ink">← Daftar barang hilang</a>
+    <a href="{{ route('lost.index') }}" class="text-sm font-bold text-slate-500 hover:text-ink">Daftar barang hilang</a>
     <h1 class="mt-5 font-display text-3xl font-extrabold text-ink">{{ $editing ? 'Ubah laporan' : 'Laporkan barang hilang' }}</h1>
     <p class="mt-2 mb-6 text-sm text-slate-500">Ceritakan ciri barang dan lokasi kehilangan agar lebih mudah dikenali.</p>
     @if ($categories->isEmpty())

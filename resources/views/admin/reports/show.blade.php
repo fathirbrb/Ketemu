@@ -6,45 +6,48 @@
 @endphp
 @section('title', $item->title)
 @section('content')
-<a href="{{ route($meta['route'].'.index') }}" class="text-sm font-bold text-slate-500 hover:text-ink">Kembali ke {{ strtolower($meta['title']) }}</a>
-
-<div class="mt-4 grid lg:grid-cols-5 gap-6">
-    <div class="lg:col-span-3 space-y-5">
-        <div class="panel overflow-hidden">
-            <div class="h-1.5 {{ $isLost ? 'bg-lost' : 'bg-found' }}"></div>
+<div class="admin-report-detail">
+    <a href="{{ route($meta['route'].'.index') }}" class="admin-detail-back">Kembali ke {{ strtolower($meta['title']) }}</a>
+    <div class="admin-detail-grid">
+        <div class="admin-detail-photo">
             @if ($item->photo_url)
-                <img src="{{ $item->photo_url }}" alt="Foto {{ $item->title }}" class="w-full max-h-96 object-cover">
+                <a href="{{ $item->photo_url }}" target="_blank" rel="noopener" title="Lihat foto ukuran penuh">
+                    <img src="{{ $item->photo_url }}" alt="Foto {{ $item->title }}">
+                </a>
             @else
-                <div class="h-44 grid place-items-center text-6xl bg-slate-100" aria-hidden="true">{{ $item->category->icon ?? '📦' }}</div>
+                <div class="admin-detail-placeholder">Foto belum ditambahkan</div>
             @endif
         </div>
-        <div class="panel p-5">
-            <h2 class="font-display font-extrabold text-lg text-ink mb-2">Ciri-ciri dan keterangan</h2>
-            <p class="text-slate-700 whitespace-pre-line leading-relaxed">{{ $item->description }}</p>
-        </div>
-    </div>
-
-    <aside class="lg:col-span-2 space-y-4">
-        <div class="panel p-5">
-            <p class="text-sm font-bold {{ $isLost ? 'text-lost' : 'text-found' }}">{{ $meta['title'] }} · {{ $item->category->name }}</p>
-            <h1 class="font-display font-extrabold text-2xl leading-tight text-ink mt-1">{{ $item->title }}</h1>
-            <div class="mt-3">@include('admin._badge')</div>
-            <dl class="mt-5 space-y-3 text-sm">
-                <div><dt class="text-slate-400">Lokasi</dt><dd class="font-bold text-ink">{{ $item->location }}</dd></div>
-                <div><dt class="text-slate-400">{{ $meta['dateLabel'] }}</dt><dd class="font-bold text-ink">{{ $item->event_date->translatedFormat('l, d F Y') }}</dd></div>
-                <div><dt class="text-slate-400">Dilaporkan oleh</dt><dd class="font-bold text-ink">{{ $item->user->name }} ({{ $item->user->email }})</dd></div>
-                <div><dt class="text-slate-400">Kontak</dt><dd class="font-bold text-ink">{{ $item->contact }}</dd></div>
-                <div><dt class="text-slate-400">Dibuat</dt><dd class="font-bold text-ink">{{ $item->created_at->translatedFormat('d F Y, H:i') }}</dd></div>
+        <article class="admin-detail-information">
+            <div class="flex flex-wrap items-center gap-3">
+                <p class="admin-detail-category">{{ $meta['title'] }} · {{ $item->category?->name ?? 'Tanpa kategori' }}</p>
+                @include('admin._badge')
+            </div>
+            <h1>{{ $item->title }}</h1>
+            <dl class="admin-detail-facts">
+                <div><dt>Lokasi</dt><dd>{{ $item->location }}</dd></div>
+                <div><dt>{{ $meta['dateLabel'] }}</dt><dd>{{ $item->event_date->format('d/m/Y') }}</dd></div>
+                <div><dt>Dilaporkan oleh</dt><dd>{{ $item->user?->name ?? 'Pengguna' }}<br><span class="text-slate-500">{{ $item->user?->email }}</span></dd></div>
+                <div><dt>Nomor kontak</dt><dd>{{ $item->contact }}</dd></div>
+                <div><dt>Dibuat</dt><dd>{{ $item->created_at->format('d/m/Y, H:i') }}</dd></div>
             </dl>
-            <a href="https://wa.me/{{ $wa }}" target="_blank" rel="noopener" class="btn-tag w-full mt-5">Hubungi lewat WhatsApp</a>
-        </div>
-        <div class="panel p-4 flex gap-3">
-            <a href="{{ route($meta['route'].'.edit', $item->id) }}" class="btn-line flex-1">Ubah</a>
-            <form method="POST" action="{{ route($meta['route'].'.destroy', $item->id) }}" class="flex-1" onsubmit="return confirm('Hapus laporan ini? Tindakan ini tidak bisa dibatalkan.')">
-                @csrf @method('DELETE')
-                <button type="submit" class="btn-danger w-full">Hapus</button>
-            </form>
-        </div>
-    </aside>
+            <div class="admin-detail-actions">
+                @if (preg_match('/^[0-9]{8,15}$/', $wa))
+                    <a href="https://wa.me/{{ $wa }}" target="_blank" rel="noopener" class="btn-tag w-full">Hubungi lewat WhatsApp</a>
+                @endif
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="{{ route($meta['route'].'.edit', $item->id) }}" class="btn-line w-full">Ubah laporan</a>
+                    <form method="POST" action="{{ route($meta['route'].'.destroy', $item->id) }}" onsubmit="return confirm('Hapus laporan ini? Tindakan ini tidak bisa dibatalkan.')">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="btn-danger w-full">Hapus laporan</button>
+                    </form>
+                </div>
+            </div>
+            <details class="admin-detail-description" open>
+                <summary>Ciri dan deskripsi barang</summary>
+                <p>{{ $item->description }}</p>
+            </details>
+        </article>
+    </div>
 </div>
 @endsection

@@ -10,10 +10,6 @@
             <label for="name" class="label">Nama kategori</label>
             <input id="name" name="name" value="{{ old('name', $category->name) }}" required maxlength="100" class="input">
         </div>
-        <div>
-            <label for="icon" class="label">Emoji</label>
-            <input id="icon" name="icon" value="{{ old('icon', $category->icon) }}" maxlength="20" class="input">
-        </div>
         <div class="flex gap-3">
             <button type="submit" class="btn-primary">Simpan perubahan</button>
             <a href="{{ route('admin.categories.index') }}" class="btn-line">Batal</a>

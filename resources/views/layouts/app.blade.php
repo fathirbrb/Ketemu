@@ -75,7 +75,7 @@
 <footer class="border-t border-slate-200 bg-white">
     <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-slate-500 flex flex-wrap justify-between gap-2">
         <p><span class="font-display font-extrabold text-ink">Ketemu</span>, sistem informasi barang hilang dan temuan.</p>
-        <p>UTP Pemrograman Web Lanjut {{ date('Y') }}</p>
+        <p>&copy; {{ date('Y') }} Ketemu. All rights reserved.</p>
     </div>
 </footer>
 
